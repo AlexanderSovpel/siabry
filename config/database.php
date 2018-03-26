@@ -1,17 +1,17 @@
 <?php
 
-if ($_SERVER['SERVER_NAME'] == "siabry.herokuapp.com") {
-    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-    $host = $url["host"];
-    $username = $url["user"];
-    $password = $url["pass"];
-    $database = substr($url["path"], 1);
-} else {
-    $host = env('DB_HOST', '127.0.0.1');
-    $database = env('DB_DATABASE', 'forge');
-    $username = env('DB_USERNAME', 'forge');
-    $password = env('DB_PASSWORD', '');
-}
+// if ($_SERVER['SERVER_NAME'] == "siabry.herokuapp.com") {
+//     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+//     $host = $url["host"];
+//     $username = $url["user"];
+//     $password = $url["pass"];
+//     $database = substr($url["path"], 1);
+// } else {
+//     $host = env('DB_HOST', '127.0.0.1');
+//     $database = env('DB_DATABASE', 'forge');
+//     $username = env('DB_USERNAME', 'forge');
+//     $password = env('DB_PASSWORD', '');
+// }
 
 return [
 
@@ -54,10 +54,10 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
