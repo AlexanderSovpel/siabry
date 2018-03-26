@@ -1,0 +1,75 @@
+@import "variables";
+
+.squad {
+  background-color: $colorLight;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0px 16px;
+    background-color: $colorMiddle;
+  }
+
+  &__checker {
+    float: left;
+    margin-right: 8px;
+  }
+
+  &__label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 56px;
+    position: relative;
+
+    &::after {
+      content: '';
+      background-image: url(../img/expand-more.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 24px;
+      height: 24px;
+      display: block;
+      position: absolute;
+      right: 0px;
+      top: 16px;
+    }
+  }
+
+  &__details {
+    padding: 16px;
+    display: none;
+  }
+
+  &__details-toggle {
+    display: none;
+
+    &:checked ~ .squad__details {
+      display: block;
+    }
+
+    &:checked ~ .squad__header > .squad__label::after {
+      background-image: url(../img/expand-less.svg);
+    }
+  }
+
+  &__players {
+    column-count: 1;
+
+    @media screen and (min-width: 720px) {
+      column-count: 2;
+      column-gap: 48px;
+    }
+
+    @media screen and (min-width: 1280px) {
+      // column-count: 4;
+    }
+  }
+
+  &__player {
+    &-waiting {
+      list-style-image: url(../img/wait-list.svg);
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "variables";
+
+.footer {
+  grid-column: 1 / span 2;
+  z-index: 1;
+  background-color: $colorDark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__copyright {
+    text-align: center;
+    color: $colorMiddle;
+    font-size: 14px;
+    margin: 0px;
+  }
+}

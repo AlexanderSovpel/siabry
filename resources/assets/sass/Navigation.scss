@@ -1,0 +1,38 @@
+@import "variables";
+
+.nav {
+  // background-color: $colorMiddle;
+  display: none;
+
+  @media screen and (min-width: 960px) {
+    display: flex;
+    // flex-direction: column;
+    // position: sticky;
+    // top: 0px;
+    // height: 100vh;
+  }
+
+  &__item {
+    display: inline-block;
+    text-decoration: none;
+    color: $colorDark;
+    // color: $colorLight;
+    padding: 16px;
+
+    &.active,
+    &:hover {
+      // background-color: #cccbc2;
+      color: $colorPrimary;
+    }
+
+    &.disabled {
+      color: #cccbc2;
+
+      &:hover {
+        cursor: default;
+        background-color: transparent;
+      }
+    }
+  }
+  
+}

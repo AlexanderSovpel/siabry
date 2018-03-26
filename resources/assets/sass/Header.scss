@@ -1,0 +1,63 @@
+@import "variables";
+
+.header {
+  box-sizing: border-box;
+  padding: 0px 16px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25);
+  // border-bottom: 1px solid #cccbc2;
+  // background-color: $colorDark;
+  // grid-column: 1 / span 2;
+
+  &__logo {
+    font-family: 'Merriweather';
+    font-weight: 900;
+    font-size: 24px;
+    text-decoration: none;
+    color: $colorDark;
+    // color: $colorLight;
+    display: block;
+    width: 120px;
+    height: 56px;
+    transform: skewY(-10deg);
+
+    &-left {
+      display: block;
+    }
+    
+    &-right {
+      float: right;
+    }
+  }
+
+  &__contacts {
+    color: $colorMiddle;
+    display: none;
+
+    @media screen and (min-width: 960px) {
+      display: inline;
+    }
+  }
+  
+  &__logout {
+    display: none;
+
+    @media screen and (min-width: 960px) {
+      display: inline;
+    }
+  }
+  
+  &__side-menu-btn {
+    width: 48px;
+    height: 48px;
+    background-image: url(../img/menu.svg);
+
+    @media screen and (min-width: 960px) {
+      display: none;
+    }
+  }
+  
+}

@@ -1,0 +1,55 @@
+@import "variables";
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: $colorMiddle;
+  transition: left 0.25s ease;
+
+  &.hidden {
+    left: 100vw;
+    transition: left 0.25s ease;
+  }
+
+  &__close-btn {
+    text-align: right;
+    align-self: flex-end;
+    margin: 16px;
+    width: 48px;
+    height: 48px;
+    background-image: url(../img/close.svg);
+  }
+
+  &__item {
+    font-size: 24px;
+    height: 56px;
+    line-height: 56px;
+    padding-left: 48px;
+    color: $colorDark;
+    text-decoration: none;
+
+    &.disabled {
+      color: #cccbc2;
+    }
+
+    &.active {
+      background-color: #cccbc2;
+    }
+
+    &.phone {
+      background-image: url(../img/phone.svg);
+      background-repeat: no-repeat;
+      background-size: 24px;
+      background-position: left 16px center;
+      border-top: 1px solid $colorDark;
+      border-bottom: 1px solid $colorDark;
+    }
+  }
+}
