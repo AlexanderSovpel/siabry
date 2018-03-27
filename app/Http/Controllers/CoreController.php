@@ -17,8 +17,7 @@ class CoreController extends Controller {
   }
 
   public function tables() {
-    $tables = DB::select('SHOW TABLES');
-    $tables = array_map('current', $tables);
+    $tables = DB::select('SELECT table_name FROM information_schema.tables WHERE table_schema="tmaster"');
     return $tables;
   }
 }
