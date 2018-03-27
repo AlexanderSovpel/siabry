@@ -31,10 +31,13 @@ Route::get('currencies', 'CoreController@currencies');
 Route::get('players', 'PlayersController@index');
 Route::get('players/{player}', 'PlayersController@get');
 Route::get('players/{player}/applications', 'PlayersController@applications');
+Route::get('players/{player}/credentials', 'PlayersController@credentials');
 
 Route::get('squads', 'SquadsController@index');
 Route::get('squads/{squad}', 'SquadsController@get');
 Route::get('squads/{squad}/applications', 'SquadsController@players');
+
+Route::get('tables', 'CoreController@tables');
 
 Route::get('tournaments', 'TournamentsController@index');
 Route::get('tournaments/{tournament}', 'TournamentsController@get');

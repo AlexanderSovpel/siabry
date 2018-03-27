@@ -24,4 +24,8 @@ class PlayersController extends Controller {
   public function applications(Player $player) {
     return $player->applications;
   }
+
+  public function credentials(Player $player) {
+    return $player->user;
+  }
 }

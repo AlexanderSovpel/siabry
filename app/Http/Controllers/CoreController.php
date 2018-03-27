@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Currency;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CoreController extends Controller {
   public function countries() {
@@ -13,5 +14,11 @@ class CoreController extends Controller {
 
   public function currencies() {
     return Currency::all();
+  }
+
+  public function tables() {
+    $tables = DB::select('SHOW TABLES');
+    $tables = array_map('current', $tables);
+    return $tables;
   }
 }
