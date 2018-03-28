@@ -20,6 +20,10 @@ class Player extends Model
     ];
 
     public function applications() {
+        return $this->hasMany('App\Application');
+    }
+
+    public function squads() {
         return $this->belongsToMany('App\Squad', 'applications')->withTimestamps();
     }
 

@@ -131,45 +131,82 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .checkbox {
-  display: none;
+
+  &__checker {
+    display: none;
+  }
 
   &__label {
-    width: 24px;
-    height: 24px;
-    background-image: url(../img/checkbox.svg);
-    background-repeat: no-repeat;
-    background-position: center;
+    display: flex;
+
+    &::before {
+      content: 'check_box_outline_blank';
+      font-family: 'Material Icons';
+      font-size: 24px;
+      line-height: 24px;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    &:empty::before {
+      margin-right: 0px;
+    }
   }
   
-  &:checked + &__label {
-    background-image: url(../img/checkbox-checked.svg);
+  &__checker:checked + &__label::before {
+    content: 'check_box';
+    color: $colorPrimary;
   }
   
-  &:disabled + &__label {
+  &__checker:disabled + &__label::before {
     opacity: 0.5;
   }
 }
 
 .radio-button {
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
 
   &__radio {
     display: none;
   }
 
-  &__view {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-    background-image: url(../img/radio-button-unchecked.svg);
-    background-size: 16px;
+  &__label {
+    display: flex;
+
+    &::before {
+      content: 'radio_button_unchecked';
+      font-family: 'Material Icons';
+      font-size: 24px;
+      line-height: 24px;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    &:empty::before {
+      margin-right: 0px;
+    }
   }
 
-  &__radio:checked + &__view {
-    background: url(../img/radio-button-checked.svg);
-    background-size: 16px;
+  &__radio:checked + &__label::before {
+    content: 'radio_button_checked';
+    color: $colorPrimary;
+  }
+
+  &__label.wait-list::before {
+    content: 'hourglass_empty'
+  }
+
+  &__radio:checked + &__label.wait-list::before {
+    content: 'hourglass_full'
+  }
+
+  &__radio:disabled + &__label::before {
+    opacity: 0.5;
   }
 }
 
@@ -289,3 +326,115 @@ select {
   }
 }
 
+.tristate {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  & > .tristate__state {
+    position: absolute;
+    margin: 0;
+    width: 16px;
+    height: 24px;
+    opacity: 0;
+    z-index: 10;
+
+    &-off {
+      left: 32px;
+
+      &:disabled ~ .tristate__label-off + .tristate__label-null {
+        opacity: 0.5;
+      }
+    }
+
+    &-null {
+      left: 48px;
+    }
+
+    &-on {
+      left: 64px;
+
+      &:disabled ~ .tristate__label-on + .tristate__label-null {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  & > .tristate__label {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+
+    &-on, &-off {
+      display: none;
+      color: $colorPrimary;
+    }
+  }
+
+  & > span {
+    display: inline-block;
+    width: 48px;
+    height: 12px;
+    margin: 8px;
+    border-radius: 6px;
+    position: relative;
+    background-color: #cccbca;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      position: absolute;
+      top: -6px;
+      left: 12px;
+      background-color: $colorDark;
+      transition: left 0.2s ease;
+    }
+  }
+
+  & > .tristate__state-null:checked {
+    & ~ span::before {
+      left: 12px;
+      transition: left 0.2s ease;
+    }
+  
+    & ~ .tristate__label-on,
+    & ~ .tristate__label-off {
+      display: none;
+    }
+  } 
+  
+  & > .tristate__state-off:checked {
+    & ~ .tristate__label-off {
+      display: inline-block;
+    }
+  
+    & ~ .tristate__label-off + .tristate__label-null,
+    & ~ .tristate__label-null + .tristate__label-on, {
+      display: none;
+    }
+  
+    & ~ span::before {
+      left: 0px;
+      transition: left 0.2s ease;
+    }
+  }
+  
+  & > .tristate__state-on:checked {
+    & ~ .tristate__label-on {
+      display: inline-block;
+    }
+  
+    & ~ .tristate__label-off,
+    & ~ .tristate__label-on + .tristate__label-null, {
+      display: none;
+    }
+  
+    & ~ span::before {
+      left: 24px;
+      transition: left 0.2s ease;
+    }
+  }
+}

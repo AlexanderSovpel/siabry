@@ -37,8 +37,8 @@ class Players extends Component {
   }
 
   renderApplications(player) {
-    return player.applications.map((application, index) => (
-      <p key={index}>{application.start_date} {application.start_time}&nbsp;—&nbsp;группа {application.id}</p>
+    return player.squads.map((squad, index) => (
+      <p key={index}>{squad.start_date} {squad.start_time}&nbsp;—&nbsp;группа {squad.id}</p>
     ));
   }
 

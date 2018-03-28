@@ -10,14 +10,14 @@ class PlayersController extends Controller {
     $players = Player::all();
     foreach ($players as $player) {
       $player->country;
-      $player->applications;
+      $player->squads;
     }
     return $players;
   }
 
   public function get(Player $player) {
     $player->country;
-    $player->applications;
+    $player->squads;
     return $player;
   }
 

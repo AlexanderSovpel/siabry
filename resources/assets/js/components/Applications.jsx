@@ -16,8 +16,8 @@ class Applications extends Component {
   constructor(props) {
     super(props);
 
-    this.MAX_SQUADS = 3;
-    this.MAX_HIGH_SQUADS = 2; // In last two days  
+    this.MAX_APPLICATIONS = 3;
+    // this.MAX_HIGH_SQUADS = 2; // In last two days  
 
     this.player = JSON.parse(localStorage.getItem('player'));
 
@@ -25,8 +25,13 @@ class Applications extends Component {
       days: [],
       status: { type: '' },
       loading: false,
-      selectedSquads: this.player.applications.map(squad => squad.id),
+      currentAppications: this.player.applications.map(application => ({
+        squad_id: application.squad_id,
+        waiting_list: Boolean(application.waiting_list)
+      })),
     };
+
+    // console.log(this.state.currentAppications);
 
     this.onSquadToggle = this.onSquadToggle.bind(this);
     this.applyHandle = this.applyHandle.bind(this);
@@ -40,19 +45,23 @@ class Applications extends Component {
     SquadService.getSquads().then(days => {
       this.setState(
         state => ({days: days}),
-        () => this.checkRules()
+        () => {
+          this.checkRules();
+          const filledSquads = document.querySelectorAll('.squad-filled .squad__checker > .checkbox__checker:not(:checked)');
+          filledSquads.forEach(checkbox => checkbox.disabled = true);
+        }
       );
     });
   }
 
   disableUnchecked() {
-    const squadCheckboxes = document.querySelectorAll('.squad:not(.filled) .checkbox:not(:checked)');
-    squadCheckboxes.forEach(checkbox => checkbox.disabled = true);
+    const groups = document.querySelectorAll('.squad:not(.squad-filled) .group:not(:checked)');
+    groups.forEach(groupChecker => groupChecker.disabled = true);
   }
 
   enableUnchecked() {
-    const squadCheckboxes = document.querySelectorAll('.squad:not(.filled) .checkbox:not(:checked)');
-    squadCheckboxes.forEach(checkbox => checkbox.disabled = false);
+    const groups = document.querySelectorAll('.squad:not(.squad-filled) .group:not(:checked)');
+    groups.forEach(groupChecker => groupChecker.disabled = false);
   }
 
   getHighSquads() {
@@ -60,14 +69,18 @@ class Applications extends Component {
       ...this.state.days[this.state.days.length - 1].squads,
       ...this.state.days[this.state.days.length - 2].squads
     ];
-    const selectedHigh = this.state.selectedSquads.filter(squadId =>
-      highSquads.find(highSquad => highSquad.id === squadId)
+    const selectedHigh = this.state.currentAppications.filter(application =>
+      highSquads.find(highSquad => highSquad.id === application.squad_id)
     );
     return selectedHigh.length;
   }
 
   checkRules() {
-    if (this.state.selectedSquads.length >= this.MAX_SQUADS || this.getHighSquads() >= this.MAX_HIGH_SQUADS) {
+    const groupApplications = this.state.currentAppications.filter(application => {
+      return application.waiting_list === false;
+    });
+
+    if (groupApplications.length >= this.MAX_APPLICATIONS) {
       this.disableUnchecked();
       return false;
     } else {
@@ -76,20 +89,41 @@ class Applications extends Component {
     }
   }
 
-  onSquadToggle(e, newSquad) {
+  onSquadToggle(e, newApplication) {
     this.setState(state => {
-      if (state.selectedSquads && state.selectedSquads.indexOf(newSquad) >= 0) {
+      if (newApplication.waiting_list === null) {
         return {
-          selectedSquads: state.selectedSquads.filter(squad =>  squad !== newSquad)
-        }
+          currentAppications: state.currentAppications.filter(application => {
+            return newApplication.squad_id !== application.squad_id
+          })
+        };
       }
-      if (this.checkRules()) {
+
+      const existingApplication = state.currentAppications.find(application => {
+        return newApplication.squad_id === application.squad_id;
+      });
+
+      if (existingApplication !== undefined) {
         return {
-          selectedSquads: [...state.selectedSquads, newSquad]
-        }
+          currentAppications: state.currentAppications.map(application => {
+            if (application.squad_id === newApplication.squad_id) {
+              return {
+                ...application,
+                waiting_list: !application.waiting_list
+              };
+            }
+
+            return application;
+          })
+        };
+      }
+
+      return {
+        currentAppications: [...state.currentAppications, newApplication]
       }
     }, () => {
       this.checkRules();
+      // console.log(this.state.currentAppications);
     });
   }
 
@@ -97,16 +131,20 @@ class Applications extends Component {
     event.preventDefault();
     this.setState({ loading: true });
 
+    // console.log(this.state.currentAppications);
+
     let applicationsData = [];
 
-    for (let i = 0; i < this.state.selectedSquads.length; i += 1) {
+    for (let application of this.state.currentAppications) {
       applicationsData.push({
         tournament_id: 1,
         player_id: this.player.id, 
-        squad_id: this.state.selectedSquads[i],
-        waiting_list: false
+        squad_id: application.squad_id,
+        waiting_list: application.waiting_list
       });
     }
+
+    // console.log(applicationsData);
 
     ApplicationService.apply(this.player.id, applicationsData).then(
       response => {
@@ -168,7 +206,7 @@ class Applications extends Component {
           {this.renderDays()}
             <button type="submit"
               className="button primary squads__send-button"
-              disabled={this.state.selectedSquads.length ? '' : 'disabled'}>
+              disabled={this.state.currentAppications.length ? '' : 'disabled'}>
               {this.state.loading ? <Preloader /> : 'Отправить заявку'}
             </button>
           </form>
