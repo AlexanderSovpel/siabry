@@ -26,20 +26,33 @@ class Players extends Component {
     if (this.state.players) {
       return this.state.players.map((player, index) => (
         <tr className="player" key={index}>
-          <td>{index + 1}</td>
-          <td>{player.last_name} {player.first_name}</td>
-          <td>{player.country.name_ru}</td>
-          <td>{this.renderApplications(player)}</td>
+          <td>{player.last_name} {player.first_name} ({player.country.iso_code})</td>
+          <td>
+            <p className="text">Основные группы:</p>
+            <ul className="player__groups">
+            {this.renderApplications(player, 0)}
+            </ul>
+            <p className="text">Лист ожидания:</p>
+            <ul className="player__groups">
+            {this.renderApplications(player, 1)}
+            </ul>
+          </td>
         </tr>
       ));
     }
     return null;
   }
 
-  renderApplications(player) {
-    return player.squads.map((squad, index) => (
-      <p key={index}>{squad.start_date} {squad.start_time}&nbsp;—&nbsp;группа {squad.id}</p>
-    ));
+  renderApplications(player, waitingList = 0) {
+    return player.squads.filter(squad => squad.pivot.waiting_list === waitingList)
+      .map((squad, index) => {
+      const squadDate = new Date(`${squad.start_date}T${squad.start_time}`);
+      return (
+        <li key={index}>
+          №{squad.id}: {squadDate.toLocaleDateString()} {squadDate.toLocaleTimeString()}
+        </li>
+      );
+    });
   }
 
   render() {
@@ -53,9 +66,7 @@ class Players extends Component {
           <table className="players__table">
             <thead>
               <tr>
-                <th>№</th>
                 <th>Игрок</th>
-                <th>Страна</th>
                 <th>Потоки</th>
               </tr>
             </thead>

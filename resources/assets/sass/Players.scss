@@ -33,6 +33,12 @@
       &:nth-child(2n + 1) {
         background-color: $colorLight;
       }
+
+      &__groups {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+      }
     }
   }
 }

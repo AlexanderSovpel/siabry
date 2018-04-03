@@ -17,7 +17,6 @@ class Applications extends Component {
     super(props);
 
     this.MAX_APPLICATIONS = 3;
-    // this.MAX_HIGH_SQUADS = 2; // In last two days  
 
     this.player = JSON.parse(localStorage.getItem('player'));
 
@@ -30,8 +29,6 @@ class Applications extends Component {
         waiting_list: Boolean(application.waiting_list)
       })),
     };
-
-    // console.log(this.state.currentAppications);
 
     this.onSquadToggle = this.onSquadToggle.bind(this);
     this.applyHandle = this.applyHandle.bind(this);
@@ -62,17 +59,6 @@ class Applications extends Component {
   enableUnchecked() {
     const groups = document.querySelectorAll('.squad:not(.squad-filled) .group:not(:checked)');
     groups.forEach(groupChecker => groupChecker.disabled = false);
-  }
-
-  getHighSquads() {
-    const highSquads = [
-      ...this.state.days[this.state.days.length - 1].squads,
-      ...this.state.days[this.state.days.length - 2].squads
-    ];
-    const selectedHigh = this.state.currentAppications.filter(application =>
-      highSquads.find(highSquad => highSquad.id === application.squad_id)
-    );
-    return selectedHigh.length;
   }
 
   checkRules() {
@@ -123,7 +109,6 @@ class Applications extends Component {
       }
     }, () => {
       this.checkRules();
-      // console.log(this.state.currentAppications);
     });
   }
 
@@ -131,7 +116,6 @@ class Applications extends Component {
     event.preventDefault();
     this.setState({ loading: true });
 
-    // console.log(this.state.currentAppications);
 
     let applicationsData = [];
 
@@ -143,8 +127,6 @@ class Applications extends Component {
         waiting_list: application.waiting_list
       });
     }
-
-    // console.log(applicationsData);
 
     ApplicationService.apply(this.player.id, applicationsData).then(
       response => {
@@ -197,8 +179,7 @@ class Applications extends Component {
           <header className="squads__header">
             <h1>Регистрация</h1>
             <p className="text note">
-              Выберите не более трёх групп, из них&nbsp;—&nbsp;не более двух 
-              групп 15–16 июня.
+              Выберите не более трёх основных групп.
             </p>
           </header>
           {this.renderAlert()}

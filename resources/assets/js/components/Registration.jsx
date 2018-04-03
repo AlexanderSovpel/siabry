@@ -21,6 +21,7 @@ class Registration extends Component {
 
     HelperService.getCountries()
       .then(countries => {
+        console.log(countries);
         for(let i = 0; i < countries.data.length; i += 1) {
           this.countries.push({
             value: countries.data[i].id,
@@ -131,20 +132,20 @@ class Registration extends Component {
           </fieldset>
 
           <fieldset className="form__group">
-            <Input type="text" name="firstName" label="Имя" placeholder="Имя" required />
-            <Input type="text" name="lastName" label="Фамилия" placeholder="Фамилия" required />
-            <Input type="text" name="middleName" label="Отчество" placeholder="Отчество" />
+            <Input type="text" name="firstName" label="Имя" placeholder="Иван" required />
+            <Input type="text" name="middleName" label="Отчество" placeholder="Иванович" />
+            <Input type="text" name="lastName" label="Фамилия" placeholder="Иванов" required />
           </fieldset>
 
           <fieldset className="form__group">
             <RadioButtonGroup label="Пол">
-              <RadioButton name="gender" value="m" label="мужской" checked />
-              <RadioButton name="gender" value="f" label="женский" />
+              <RadioButton name="gender" value="f" id="gender-f" label="женский" />
+              <RadioButton name="gender" value="m" id="gender-m" label="мужской" checked />
             </RadioButtonGroup>
             <Input type="date" name="birthday" label="Дата рождения" required />
             <RadioButtonGroup label="Ведущая рука">
-              <RadioButton name="handUsed" value="r" label="правая" checked />
-              <RadioButton name="handUsed" value="l" label="левая" />
+              <RadioButton name="handUsed" value="l" id="handUsed-l" label="левая" />
+              <RadioButton name="handUsed" value="r" id="handUsed-r" label="правая" checked />
             </RadioButtonGroup>
           </fieldset>
 

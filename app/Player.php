@@ -24,7 +24,9 @@ class Player extends Model
     }
 
     public function squads() {
-        return $this->belongsToMany('App\Squad', 'applications')->withTimestamps();
+        return $this->belongsToMany('App\Squad', 'applications')
+            ->withPivot('waiting_list')
+            ->withTimestamps();
     }
 
     public function country() {

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Player;
+use App\Mail\ApplicationSent;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,6 +28,9 @@ class ApplicationsController extends Controller {
     foreach ($applications as $application) {
         Application::create($application);
     }
+
+    // mail($player->email, 'Siabry 2018 Registration', 'You applied!');
+    // Mail::to($player->email)->send(new ApplicationSent($player));
 
     return $player->applications;
   }

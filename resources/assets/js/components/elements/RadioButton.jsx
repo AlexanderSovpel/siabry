@@ -24,7 +24,6 @@ export function RadioButton(props) {
         onClick={props.onClick}
         onChange={props.onChange}
       />
-      {/* <label htmlFor={props.name + props.value} className="radio-button__view"></label> */}
       <label htmlFor={props.id} className={`radio-button__label ${props.icon || ''}`}>{props.label}</label>
     </div>
   );

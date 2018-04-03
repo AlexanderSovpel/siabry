@@ -12,6 +12,13 @@ class ApplacationService {
       applications: applications
     }).then(response => response.data);
   }
+
+  static notify(email, applications) {
+    return axios.post('https://siabry2018-test.000webhostapp.com/', {
+      email: email,
+      applications: applications
+    });
+  }
 }
 
 export default ApplacationService;

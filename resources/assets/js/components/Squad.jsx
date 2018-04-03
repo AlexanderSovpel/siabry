@@ -9,9 +9,8 @@ import '../../sass/Squad.scss';
 const Squad = function(props) {
   const selected = props.players.find(player => player.id === props.playerId);
   const isWaitingList = selected ? Boolean(selected.pivot.waiting_list) : null;
-  console.log(isWaitingList);
 
-  let freeSlots = props.spots - props.players.length;
+  let freeSlots = props.spots - props.players.filter(player => player.pivot.waiting_list === 0).length;
   freeSlots = (freeSlots > 0) ? freeSlots : 0;
 
   return (
@@ -44,29 +43,38 @@ const Squad = function(props) {
         />
         <label htmlFor={`squad__details_${props.id}`} className="squad__label">
           <p className="text">{props.time} — группа {props.id} {(freeSlots > 0) || '(заполнен)'}</p>
-          <p className="text">Мест: {freeSlots}/{props.spots}</p>
+          <p className="text">Мест: {freeSlots}</p>
           <p className="text">{props.fee}$</p>
         </label>
       </header>
 
         <div className="squad__details">
-          <p className="text">Свободных мест: <span className="slots">{freeSlots}</span>
+          <p className="text">Свободных мест: <span className="slots">{freeSlots}</span>/{props.spots}
           </p>
           <p className="text">Вступительный взнос: <span className="fee">{props.fee} $</span>
           </p>
           <p className="text">Участники:</p>
           <ol className="squad__players">
             {
-              props.players.map((player, index) => {
-                let className = 'squad__player';
-                // FIX
-                if (player.id === props.playerId && isWaitingList) {
-                  className += '-waiting';
-                }
-                return <li className={className} key={index}>
-                  {player.last_name} {player.first_name}
-                </li>
-              })
+              props.players.filter(player => player.pivot.waiting_list === 0)
+                .map((player, index) => (
+                  <li className="squad__player" key={index}>
+                    {player.last_name} {player.first_name}
+                  </li>
+                )
+              )
+            }
+          </ol>
+          <p className="text">Лист ожидания:</p>
+          <ol className="squad__players">
+            {
+              props.players.filter(player => player.pivot.waiting_list === 1)
+                .map((player, index) => (
+                  <li className="squad__player" key={index}>
+                    {player.last_name} {player.first_name}
+                  </li>
+                )
+              )
             }
           </ol>
         </div>
