@@ -1,0 +1,14 @@
+.home {
+  &__welcome {
+    text-align: center;
+  }
+
+  &__logo {
+    display: inline-block;
+    background: url('../img/logo.png') no-repeat;
+    width: 259px;
+    height: 168px;
+    margin-top: 40px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+  }
+}

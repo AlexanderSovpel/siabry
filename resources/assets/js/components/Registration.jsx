@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { Translate } from 'react-localize-redux';
 
 import { Input } from './elements/Input';
 import { RadioButton, RadioButtonGroup } from './elements/RadioButton';
+import Dropdown from './elements/Dropdown';
 import { Select } from './elements/Select';
 
 import AuthService from '../services/AuthService';
@@ -13,21 +15,19 @@ class Registration extends Component {
     super(props);
 
     this.state = {
-      currentStep: 0
+      currentStep: 0,
+      countries: [],
     };
-
-
-    this.countries = [];
 
     HelperService.getCountries()
       .then(countries => {
         console.log(countries);
-        for(let i = 0; i < countries.data.length; i += 1) {
-          this.countries.push({
-            value: countries.data[i].id,
-            label: countries.data[i].name_ru
-          });
-        }
+        this.setState({
+          countries: countries.data.map(item => ({
+            value: item.id,
+            label: item.name_ru
+          }))
+        });
       })
       .catch(error => console.log(error));
 
@@ -105,7 +105,7 @@ class Registration extends Component {
       handUsed: document.querySelector('input[name=handUsed]:checked').value,
       email: document.querySelector('input[name=email]').value,
       mobile: document.querySelector('input[name=mobile]').value,
-      country: document.querySelector('select[name=country]').selectedOptions[0].value,
+      country: document.querySelector('input[name=country]').value,
       city: document.querySelector('input[name=city]').value,
     };
 
@@ -126,42 +126,58 @@ class Registration extends Component {
       <div className="index-page__content">
         <form className="form form-registration" name="registrationForm" onSubmit={this.submitHandler}>
           <fieldset className="form__group form__group-current">
-            <Input type="email" name="email" label="Эл. почта" placeholder="example@bowling.by" required />
-            <Input type="text" name="username" label="Имя пользователя" placeholder="super-bowler-2018" required />
-            <Input type="password" name="password" label="Пароль" placeholder="******" required />
+            <Input type="email" name="email" label={<Translate id="registration.email"></Translate>} placeholder="example@bowling.by" required />
+            <Input type="text" name="username" label={<Translate id="registration.username"></Translate>} placeholder="super-bowler-2018" required />
+            <Input type="password" name="password" label={<Translate id="registration.password"></Translate>} placeholder="******" required />
           </fieldset>
 
           <fieldset className="form__group">
-            <Input type="text" name="firstName" label="Имя" placeholder="Иван" required />
-            <Input type="text" name="middleName" label="Отчество" placeholder="Иванович" />
-            <Input type="text" name="lastName" label="Фамилия" placeholder="Иванов" required />
+            <Input type="text" name="firstName" label={<Translate id="registration.firstName"></Translate>} placeholder="Иван" required />
+            <Input type="text" name="middleName" label={<Translate id="registration.middleName"></Translate>} placeholder="Иванович" />
+            <Input type="text" name="lastName" label={<Translate id="registration.lastName"></Translate>} placeholder="Иванов" required />
           </fieldset>
 
           <fieldset className="form__group">
-            <RadioButtonGroup label="Пол">
-              <RadioButton name="gender" value="f" id="gender-f" label="женский" />
-              <RadioButton name="gender" value="m" id="gender-m" label="мужской" checked />
+            <RadioButtonGroup label={<Translate id="registration.gender"></Translate>}>
+              <RadioButton name="gender" value="f" id="gender-f" label={<Translate id="registration.genderFemale"></Translate>} />
+              <RadioButton name="gender" value="m" id="gender-m" label={<Translate id="registration.genderMale"></Translate>} checked />
             </RadioButtonGroup>
-            <Input type="date" name="birthday" label="Дата рождения" required />
-            <RadioButtonGroup label="Ведущая рука">
-              <RadioButton name="handUsed" value="l" id="handUsed-l" label="левая" />
-              <RadioButton name="handUsed" value="r" id="handUsed-r" label="правая" checked />
+            <Input type="date" name="birthday" label={<Translate id="registration.birthday"></Translate>} required />
+            <RadioButtonGroup label={<Translate id="registration.handUsed"></Translate>}>
+              <RadioButton name="handUsed" value="l" id="handUsed-l" label={<Translate id="registration.handUsedLeft"></Translate>} />
+              <RadioButton name="handUsed" value="r" id="handUsed-r" label={<Translate id="registration.handUsedRight"></Translate>} checked />
             </RadioButtonGroup>
           </fieldset>
 
           <fieldset className="form__group">
-            <Select name="country" label="Страна" placeholder="Выберите страну" data={this.countries} />
-            <Input type="text" name="city" label="Город" />
-            <Input type="tel" name="mobile" label="Телефон" />
+            {/* <Select name="country" label={<Translate id="registration.country"></Translate>} placeholder="Выберите страну" data={this.countries} /> */}
+            <Dropdown
+              name="country"
+              label={<Translate id="registration.country" />}
+              placeholder="Выберите страну"
+              data={this.state.countries}
+              required
+            />
+            <Input type="text" name="city" label={<Translate id="registration.city"></Translate>} />
+            <Input type="tel" name="mobile" label={<Translate id="registration.mobile"></Translate>} />
           </fieldset>
   
-          <button className="button button-hidden primary submit">Зарегистрироваться</button>
-          <button className="button next primary" onClick={this.nextStep}>Далее</button>
-          <button className="button button-hidden previous" onClick={this.previousStep}>Назад</button>
+          <button className="button button-hidden primary submit">
+            <Translate id="registrationButton"></Translate>
+          </button>
+          <button className="button next primary" onClick={this.nextStep}>
+            <Translate id="registration.nextButton"></Translate>
+          </button>
+          <button className="button button-hidden previous" onClick={this.previousStep}>
+            <Translate id="registration.previousButton"></Translate>
+          </button>
         </form>
 
         <p className="text center">
-          Уже есть аккаунт? <Link to="/login" className="link light">Войти</Link>
+          <Translate id="registration.note"></Translate>&nbsp;
+          <Link to="/login" className="link light">
+            <Translate id="loginButton"></Translate>
+          </Link>
         </p>
       </div>
     );

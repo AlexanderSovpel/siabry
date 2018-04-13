@@ -13,18 +13,25 @@ use Exception;
 
 
 class AuthController extends Controller {
-  private function emailExists($email) {
-    $existingEmail = Player::where('email', $email)->first();
-    return $existingEmail;
+  public function emailExists($email) {
+    $existingPlayer = Player::where('email', $email)->first();
+    if ($existingPlayer) {
+      $existingUser = User::where('player_id', $existingPlayer->id)->first();
+      return $existingUser;
+    }
+    return $existingPlayer;
   }
 
-  private function usernameExists($username) {
-    $existingUsername = User::where('username', $username)->first();
-    return $existingUsername;
+  public function usernameExists($username) {
+    $existingUser = User::where('username', $username)->first();
+    return $existingUser;
   }
 
   public function login(Request $request) {
     $playerCredentials = $this->usernameExists($request['username']);
+    if (!$playerCredentials) {
+      $playerCredentials = $this->emailExists($request['username']);
+    }
 
     if ($playerCredentials) {
       if (Hash::check($request['password'], $playerCredentials->password_hash)) {

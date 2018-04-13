@@ -11,6 +11,10 @@
 |
 */
 
+// Route::any('{all}', function () {
+//     return view('test');
+// })->where('all', '^(?!test).*');
+
 Route::any('{all}', function () {
     return view('index');
 })->where('all', '.*');

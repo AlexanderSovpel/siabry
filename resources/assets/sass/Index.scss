@@ -5,7 +5,7 @@
   background-size: cover;
   background-position: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +16,7 @@
     content: '';
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     background-color: rgba(49, 54, 56, 0.75);
@@ -74,4 +74,13 @@
 
 .button-registration {
   margin-bottom: 16px;
+}
+
+.languages {
+  color: $colorLight;
+  margin: 24px;
+
+  &__lang {
+    color: $colorLight;
+  }
 }

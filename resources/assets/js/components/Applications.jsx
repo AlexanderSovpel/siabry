@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Translate } from 'react-localize-redux';
 
 import Preloader from './elements/Preloader';
 import Alert from './Alert';
@@ -28,10 +29,12 @@ class Applications extends Component {
         squad_id: application.squad_id,
         waiting_list: Boolean(application.waiting_list)
       })),
+      changed: false,
     };
 
     this.onSquadToggle = this.onSquadToggle.bind(this);
-    this.applyHandle = this.applyHandle.bind(this);
+    this.onApply = this.onApply.bind(this);
+    this.onUnload = this.onUnload.bind(this);
   }
 
   componentWillMount() {
@@ -81,7 +84,8 @@ class Applications extends Component {
         return {
           currentAppications: state.currentAppications.filter(application => {
             return newApplication.squad_id !== application.squad_id
-          })
+          }),
+          changed: true,
         };
       }
 
@@ -100,22 +104,23 @@ class Applications extends Component {
             }
 
             return application;
-          })
+          }),
+          changed: true,
         };
       }
 
       return {
-        currentAppications: [...state.currentAppications, newApplication]
+        currentAppications: [...state.currentAppications, newApplication],
+        changed: true,
       }
     }, () => {
       this.checkRules();
     });
   }
 
-  applyHandle(event) {
+  onApply(event) {
     event.preventDefault();
     this.setState({ loading: true });
-
 
     let applicationsData = [];
 
@@ -132,7 +137,8 @@ class Applications extends Component {
       response => {
         this.setState({
           loading: false,
-          status: { type: 'success', message: 'Заявка успешно подана'}
+          status: { type: 'success', message: <Translate id="applicationSuccess"></Translate>},
+          changed: false,
         });
         this.player.applications = response;
         localStorage.setItem('player', JSON.stringify(this.player));
@@ -142,10 +148,30 @@ class Applications extends Component {
         console.error(error);
         this.setState({
           loading: false,
-          status: { type: 'failure', message: 'Ошибка подачи заявки'}
+          status: { type: 'failure', message: <Translate id="applicationFailure"></Translate>}
         });
       }
     );
+  }
+
+  onUnload(event) {
+    if (this.state.changed) {
+      event.returnValue = "Вы не сохранили изменения заявки. Всё равно уйти?";
+    }
+  }
+
+  componentDidMount() {
+    this.unblock = this.props.history.block((location, action) => {
+      if (this.state.changed) {
+        return "Вы не сохранили изменения заявки. Всё равно уйти?";
+      }
+    });
+    window.addEventListener("beforeunload", this.onUnload);
+  }
+
+  componentWillUnmount() {
+    this.unblock();
+    window.removeEventListener("beforeunload", this.onUnload);
   }
 
   renderAlert() {
@@ -177,18 +203,18 @@ class Applications extends Component {
         <Header active="apply" logout={this.props.logout}/>
         <section className="squads content">
           <header className="squads__header">
-            <h1>Регистрация</h1>
+            <h1><Translate id="applications.header"></Translate></h1>
             <p className="text note">
-              Выберите не более трёх основных групп.
+              <Translate id="applications.note"></Translate>
             </p>
           </header>
           {this.renderAlert()}
-          <form id="applicationForm" className="squads__list" onSubmit={this.applyHandle} onReset={this.removeHandle}>
+          <form id="applicationForm" className="squads__list" onSubmit={this.onApply} onReset={this.removeHandle}>
           {this.renderDays()}
             <button type="submit"
               className="button primary squads__send-button"
               disabled={this.state.currentAppications.length ? '' : 'disabled'}>
-              {this.state.loading ? <Preloader /> : 'Отправить заявку'}
+              {this.state.loading ? <Preloader /> : <Translate id="applications.applyButton"></Translate>}
             </button>
           </form>
         </section>

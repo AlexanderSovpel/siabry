@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Translate } from 'react-localize-redux';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -25,19 +26,21 @@ class Players extends Component {
   renderPlayers() {
     if (this.state.players) {
       return this.state.players.map((player, index) => (
-        <tr className="player" key={index}>
-          <td>{player.last_name} {player.first_name} ({player.country.iso_code})</td>
-          <td>
-            <p className="text">Основные группы:</p>
-            <ul className="player__groups">
+        <section className="player" key={index}>
+          <h4 className="player__name">{player.last_name} {player.first_name} ({player.country.iso_code})</h4>
+          <article className="player__groups">
+            <p className="text"><Translate id="players.groups"/></p>
+            <ul className="player__groups-list">
             {this.renderApplications(player, 0)}
             </ul>
-            <p className="text">Лист ожидания:</p>
-            <ul className="player__groups">
+          </article>
+          <article className="player__groups">
+            <p className="text"><Translate id="players.waiting" /></p>
+            <ul className="player__groups-list">
             {this.renderApplications(player, 1)}
             </ul>
-          </td>
-        </tr>
+          </article>
+        </section>
       ));
     }
     return null;
@@ -46,10 +49,10 @@ class Players extends Component {
   renderApplications(player, waitingList = 0) {
     return player.squads.filter(squad => squad.pivot.waiting_list === waitingList)
       .map((squad, index) => {
-      const squadDate = new Date(`${squad.start_date}T${squad.start_time}`);
+        const startDate = new Date(squad.start_date);
       return (
         <li key={index}>
-          №{squad.id}: {squadDate.toLocaleDateString()} {squadDate.toLocaleTimeString()}
+          <Translate id="players.groupNumber"/>{squad.id}: {startDate.toLocaleDateString()} {squad.start_time.slice(0, 5)}
         </li>
       );
     });
@@ -61,19 +64,11 @@ class Players extends Component {
         <Header active="players"/>
         <section className="players content">
           <header className="players__header">
-            <h1>Участники</h1>
+            <h1><Translate id="players.header"/></h1>
           </header>
-          <table className="players__table">
-            <thead>
-              <tr>
-                <th>Игрок</th>
-                <th>Потоки</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderPlayers()}
-            </tbody>
-          </table>
+          <article className="players__table">
+            {this.renderPlayers()}
+          </article>
         </section>
         <Footer/>
       </div>

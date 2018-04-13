@@ -1,39 +1,90 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Translate, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
+import { connect } from 'react-redux';
+
+import AuthService from '../services/AuthService';
 
 import Navigation from './Navigation';
 import SideMenu from './SideMenu';
 
 import '../../sass/Header.scss';
+import Dropdown from './elements/Dropdown';
 
-const Header = function(props) {
-  const toggleMenu = function () {
+class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logoutButton = (
+      <a href="/" className="header__logout button button-flat" onClick={AuthService.logout}>
+        <Translate id="logoutButton"/>
+      </a>
+    );
+
+    this.loginButton = (
+      <Link to="/login" className="header__login button button-flat">
+        <Translate id="loginButton"/>
+      </Link>
+    );
+
+    this.languages = [
+      { value: 'ru', label: 'RU' },
+      { value: 'en', label: 'EN' }
+    ];
+
+    this.state = {
+      currentLanguage: localStorage.getItem('language') || this.props.currentLanguage.code,
+    }
+
+    this.setActiveLanguage(this.state.currentLanguage);
+    this.onLanguageChange = this.onLanguageChange.bind(this);
+  }
+
+  toggleMenu() {
     const sideMenu = document.querySelector('.side-menu');
     sideMenu.classList.toggle('hidden');
   }
 
-  return (
-    <header className="header">
-      <Link to="/" className="header__logo">
-        <span className="header__logo-left">Сябры</span>
-        <span className="header__logo-right">2018</span>
-      </Link>
+  onLanguageChange(event) {
+    const lang = event.target.dataset.value;
+    this.setActiveLanguage(lang);
+  }
 
-      <Navigation active={props.active}/>
+  setActiveLanguage(lang) {
+    this.props.dispatch(setActiveLanguage(lang));
+    localStorage.setItem('language', lang);
+    this.setState({ currentLanguage: lang });
+  }
 
-      {/* <p className="header__contacts light">
-      <a href="tel:+375296535033" className="link light phone">+375 (29) 653-50-33</a>
-      <br/>
-      Елена Лазута
-      </p> */}
+  render() {
+    return (
+      <header className="header">
+        <Link to="/" className="header__logo">
+          <span className="header__logo-left"><Translate id="tournamentName"/></span>
+          <span className="header__logo-right">2018</span>
+        </Link>
 
-      <a href="/" className="header__logout button button-flat" onClick={props.logout}>Выход</a>
+        <Navigation active={this.props.active}/>
 
-      <button className="header__side-menu-btn button-flat" onClick={toggleMenu}></button>
+        <Dropdown
+          className="header__languages"
+          name="language"
+          data={this.languages}
+          default={this.languages.find(lang => lang.value === this.state.currentLanguage)}
+          onChange={this.onLanguageChange}
+          disabled
+        />
 
-      <SideMenu active={props.active} close={toggleMenu}/>
-    </header>
-  );
+        {AuthService.isLoggedIn() ? this.logoutButton : this.loginButton}
+
+        <button className="header__side-menu-btn button-flat" onClick={this.toggleMenu}></button>
+
+        <SideMenu active={this.props.active} close={this.toggleMenu}/>
+      </header>
+    );
+  };
 }
 
-export default Header;
+const mapStateToProps = state => ({ currentLanguage: getActiveLanguage(state.locale) });
+
+export default connect(mapStateToProps)(Header);

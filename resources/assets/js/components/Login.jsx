@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { Translate } from 'react-localize-redux';
 
 import Preloader from './elements/Preloader';
 import { Input } from './elements/Input';
@@ -65,25 +66,28 @@ class Login extends Component {
         <Input
             type="text"
             name="username"
-            label="Имя пользователя"
+            label={<Translate id="login.username"></Translate>}
             onChange={this.handleInputChange}
             required
           />
           <Input
             type="password"
             name="password"
-            label="Пароль"
+            label={<Translate id="login.password"></Translate>}
             onChange={this.handleInputChange}
             required
           />
         </fieldset>
           <button type="submit" className="button primary">
-            {this.state.loading ? <Preloader /> : 'Войти'}
+            {this.state.loading ? <Preloader /> : <Translate id="loginButton"></Translate>}
           </button>
         </form>
 
         <p className="text center">
-          Нет аккаунта? <Link to="/registration" className="link light">Зарегистрироваться</Link>
+          <Translate id="login.note"></Translate>&nbsp;
+          <Link to="/registration" className="link light">
+            <Translate id="registrationButton"></Translate>
+          </Link>
         </p>
 
         {this.renderAlert()}

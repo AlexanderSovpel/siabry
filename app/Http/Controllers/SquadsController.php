@@ -22,6 +22,7 @@ class SquadsController extends Controller {
   }
 
   public function players(Squad $squad) {
+    // return $squad->players->sortBy('first_name')->values();
     return $squad->players;
   }
 }

@@ -29,6 +29,21 @@ class AuthService {
         history.push('/apply');
       });
   }
+
+  static checkEmail(email) {
+    return axios.post('http://siabry.test/api/checkEmail', {
+      email: email,
+    }).then(response => {
+      console.log(response);
+      return response.data
+    });
+  }
+
+  static isLoggedIn() {
+    const player = JSON.parse(localStorage.getItem('player'));
+    // console.log(player);
+    return player || false;
+  }
 }
 
 export default AuthService;

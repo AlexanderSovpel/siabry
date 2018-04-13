@@ -11,34 +11,46 @@
 
   &__table {
     width: 100%;
-    border-collapse: collapse;
     border: 4px solid $colorDark;
+  }
 
-    & thead {
-      background-color: $colorDark;
-      color: $colorLight;
+  //   & thead {
+  //     background-color: $colorDark;
+  //     color: $colorLight;
+  //   }
+
+  //   & th,
+  //   & td {
+  //     text-align: left;
+  //     padding: 8px;
+  //   }
+
+  & .player {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px;
+
+    &:nth-child(2n) {
+      background-color: $colorMiddle;
     }
 
-    & th,
-    & td {
-      text-align: left;
-      padding: 8px;
+    &:nth-child(2n + 1) {
+      background-color: $colorLight;
     }
 
-    & .player {
-      &:nth-child(2n) {
-        background-color: $colorMiddle;
-      }
+    &__name {
+      width: 100%;
+      margin: 8px 0px;
+    }
 
-      &:nth-child(2n + 1) {
-        background-color: $colorLight;
-      }
+    &__groups {
+      width: 50%;
+    }
 
-      &__groups {
-        margin: 0px;
-        padding: 0px;
-        list-style: none;
-      }
+    &__groups-list {
+      margin: 0px;
+      padding: 0px;
+      list-style: none;
     }
   }
 }

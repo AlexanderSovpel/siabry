@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class PlayersController extends Controller {
   public function index() {
-    $players = Player::all();
+    $players = Player::all()->sortBy('last_name')->values();
     foreach ($players as $player) {
       $player->country;
       $player->squads;

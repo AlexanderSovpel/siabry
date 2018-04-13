@@ -1,4 +1,5 @@
 import React from 'react';
+import { Translate } from 'react-localize-redux';
 
 import Checkbox from './elements/Checkbox';
 import { RadioButton } from './elements/RadioButton';
@@ -12,6 +13,8 @@ const Squad = function(props) {
 
   let freeSlots = props.spots - props.players.filter(player => player.pivot.waiting_list === 0).length;
   freeSlots = (freeSlots > 0) ? freeSlots : 0;
+
+  const displayDateTime = new Date('1970-01-01T' + props.time + 'Z');
 
   return (
     <article className={(freeSlots > 0) ? 'squad' : 'squad squad-filled'}>
@@ -42,18 +45,18 @@ const Squad = function(props) {
           }}
         />
         <label htmlFor={`squad__details_${props.id}`} className="squad__label">
-          <p className="text">{props.time} — группа {props.id} {(freeSlots > 0) || '(заполнен)'}</p>
-          <p className="text">Мест: {freeSlots}</p>
+          <p className="text">{props.time.slice(0, 5)} — <Translate id="squad.group" /> {props.id} {(freeSlots > 0) || <Translate id="squad.full" />}</p>
+          <p className="text"><Translate id="squad.spots" /> {freeSlots}</p>
           <p className="text">{props.fee}$</p>
         </label>
       </header>
 
         <div className="squad__details">
-          <p className="text">Свободных мест: <span className="slots">{freeSlots}</span>/{props.spots}
+          <p className="text"><Translate id="squad.freeSpots" /> <span className="slots">{freeSlots}</span>/{props.spots}
           </p>
-          <p className="text">Вступительный взнос: <span className="fee">{props.fee} $</span>
+          <p className="text"><Translate id="squad.entryFee" /> <span className="fee">{props.fee} $</span>
           </p>
-          <p className="text">Участники:</p>
+          <p className="text"><Translate id="squad.players" /></p>
           <ol className="squad__players">
             {
               props.players.filter(player => player.pivot.waiting_list === 0)
@@ -65,7 +68,7 @@ const Squad = function(props) {
               )
             }
           </ol>
-          <p className="text">Лист ожидания:</p>
+          <p className="text"><Translate id="squad.waiting" /></p>
           <ol className="squad__players">
             {
               props.players.filter(player => player.pivot.waiting_list === 1)

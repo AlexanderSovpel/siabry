@@ -24,6 +24,7 @@ Route::delete('applications/{application}', 'ApplicationsController@delete');
 
 Route::post('login', 'AuthController@login');
 Route::post('registration', 'AuthController@register');
+Route::post('checkEmail', 'AuthController@checkEmail');
 
 Route::get('countries', 'CoreController@countries');
 Route::get('currencies', 'CoreController@currencies');

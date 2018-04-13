@@ -14,6 +14,7 @@ class Squad extends Model
         return $this->belongsToMany('App\Player', 'applications')
             ->withTimestamps()
             ->withPivot('waiting_list')
+            // ->orderBy('players.last_name', 'asc');
             ->orderBy('applications.created_at', 'asc');
     }
 }

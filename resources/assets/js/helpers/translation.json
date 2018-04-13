@@ -1,0 +1,111 @@
+{
+  "tournamentName": ["Сябры", "Siabry"],
+  "tournamentDescription": [
+    "международный<br/>турнир по боулингу",
+    "international<br/>bowling tournament"
+  ],
+  "registrationButton": ["Зарегистрироваться", "Register"],
+  "loginButton": ["Войти", "Login"],
+  "logoutButton": ["Выход", "Logout"],
+
+  "login": {
+    "username": ["Имя пользователя", "Username"],
+    "password": ["Пароль", "Password"],
+    "note": ["Нет аккаунта?", "Don't have an account?"]
+  },
+
+  "registration": {
+    "email": ["Эл. почта", "E-mail"],
+    "username": ["Имя пользователя", "Username"],
+    "password": ["Пароль", "Password"],
+    "firstName": ["Имя", "First Name"],
+    "middleName": ["Отчество", "Middle Name"],
+    "lastName": ["Фамилия", "Last Name"],
+    "gender": ["Пол", "Gender"],
+    "genderMale": ["мужской", "male"],
+    "genderFemale": ["женский", "female"],
+    "birthday": ["Дата рождения", "Birthday"],
+    "handUsed": ["Ведущая рука", "Hand used"],
+    "handUsedLeft": ["левая", "left"],
+    "handUsedRight": ["правая", "right"],
+    "country": ["Страна", "Country"],
+    "city": ["Город", "City"],
+    "mobile": ["Телефон", "Phone number"],
+    "nextButton": ["Далее", "Next"],
+    "previousButton": ["Назад", "Previous"],
+    "note": ["Уже есть аккаунт?", "Already have an account?"]
+  },
+
+  "nav": {
+    "home": ["Главная", "Home"],
+    "applications": ["Заявки", "Applications"],
+    "players": ["Участники", "Players"],
+    "results": ["Результаты", "Results"],
+    "regulations": ["Регламент", "Regulations"],
+    "photos": ["Фотографии", "Photos"],
+    "contacts": ["Контакты", "Contacts"]
+  },
+
+  "applications": {
+    "header": ["Заявки", "Applications"],
+    "note":[
+      "Выберите не более трёх основных групп (<i class=\"material-icons\">people_outline</i>). Количество записей в листы ожидания (<i class=\"material-icons\">hourglass_empty</i>) не ограничено.",
+      "Choose no more than three main groups (<i class=\"material-icons\">people_outline</i>). Waiting list applications (<i class=\"material-icons\">hourglass_empty</i>) are unlimited."
+    ],
+    "applyButton": ["Отправить заявку", "Apply"],
+    "applicationSuccess": ["Заявка успешно подана", "Successfully applied"],
+    "applicationFailure": ["Ошибка подачи заявки", "Application wasn't send"],
+    "applicationUnsaved": [
+      "Вы не сохранили изменения заявки. Всё равно уйти?",
+      "You have unsaved application changes. Do you want to leave?"
+    ]
+  },
+
+  "squad": {
+    "group": ["группа", "group"],
+    "full": ["(заполнен)", "(full)"],
+    "spots": ["Мест:", "Spots:"],
+    "freeSpots": ["Свободных мест:", "Free spots:"],
+    "entryFee": ["Вступительный взнос:", "Entry fee:"],
+    "players": ["Участники:", "Players:"],
+    "waiting": ["Лист ожидания:", "Waiting list:"]
+  },
+
+  "players": {
+    "header": ["Участники", "Players"],
+    "playerHeader": ["Игрок", "Player"],
+    "squadsHeader": ["Потоки", "Squads"],
+    "groups": ["Основные группы:", "Squads:"],
+    "waiting": ["Листы ожидания:", "Waiting lists:"],
+    "groupNumber": ["№", "#"]
+  },
+
+  "contacts": {
+    "header": ["Контакты", "Contacts"],
+    "person": ["Контактное лицо", "Contact person"],
+    "bowling": ["Боулинг-центр", "Bowling club"],
+    "bowlingName": ["Боулинг «KINZA»", "\"KINZA\" bowling club"],
+    "bowlingAddress": [
+      "пересечение ул. Мирошниченко и МКАД (ТЦ ЭКСПОБЕЛ)",
+      "str. Miroshnichenko & MKAD crossroad (Expobel Shopping Center)"
+    ]
+  },
+
+  "home": {
+    "header": ["Главная", "Home"],
+    "welcomeHeader": ["Добро пожаловать на «Сябры 2018»!", "Welcome to \"Siabry 2018\"!"],
+    "welcomeSubheader": ["Добро пожаловать в Беларусь!", "Welcome to Belarus!"],
+    "welcomeText": [
+      "Дамы и господа! Белорусская федерация боугинга рада пригласить вас на санкционированный ETBF турнир «Сябры 2018». Турнир будет проходить с 13 по 17 июня 2018 г.",
+      "Ladies and gentlemen! Belarusian Bowling Federation welcomes you at the sanctioned by ETFB \"Siabry 2018\" tournament. The tournament will take place from 13 till 17 of June, 2018."
+    ],
+    "regulationsLink": ["Регламент турнира", "Tournament regulations"]
+  },
+
+  "footer": {
+    "copyright": [
+      "&copy; Международный турнир по боулингу \"Сябры-2018\"",
+      "&copy; International bowling tournament \"Siabry-2018\""
+    ]
+  }
+}

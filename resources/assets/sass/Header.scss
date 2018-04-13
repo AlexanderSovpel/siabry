@@ -42,7 +42,8 @@
     }
   }
   
-  &__logout {
+  &__logout,
+  &__login {
     display: none;
 
     @media screen and (min-width: 960px) {
@@ -59,5 +60,19 @@
       display: none;
     }
   }
-  
+
+  &__languages {
+    width: 50px;
+    padding: 0px;
+    background-color: #ffffff;
+
+    & .dropdown__select {
+      border: none;
+    }
+
+    & .dropdown__options {
+      background-color: #ffffff;
+      cursor: pointer;
+    }
+  }
 }
