@@ -7,11 +7,36 @@
   "registrationButton": ["Зарегистрироваться", "Register"],
   "loginButton": ["Войти", "Login"],
   "logoutButton": ["Выход", "Logout"],
+  "resetButton": ["Сбросить пароль", "Reset password"],
+  "changePasswordButton": ["Сохранить", "Save"],
+  "applicationSuccess": ["Заявка успешно подана", "Submitted successfully"],
+
+  "countries": {
+    "BY": ["Беларусь", "Belarus"],
+    "RU": ["Россия", "Russia"],
+    "UA": ["Украина", "Ukraine"],
+    "LT": ["Литва", "Lithuania"],
+    "LV": ["Латвия", "Latvia"],
+    "UZ": ["Узбекистан", "Uzbekistan"],
+    "IL": ["Израиль", "Israel"],
+    "PL": ["Польша", "Poland"]
+  },
+
+  "weekdays": {
+    "0": ["вс", "Sun"],
+    "1": ["пн", "Mon"],
+    "2": ["вт", "Tue"],
+    "3": ["ср", "Wed"],
+    "4": ["чт", "Thu"],
+    "5": ["пт", "Fri"],
+    "6": ["сб", "Sat"]
+  },
 
   "login": {
     "username": ["Имя пользователя", "Username"],
     "password": ["Пароль", "Password"],
-    "note": ["Нет аккаунта?", "Don't have an account?"]
+    "note": ["Нет аккаунта?", "Don't have an account?"],
+    "passwordReset": ["Забыли пароль?", "Forgot your password?"]
   },
 
   "registration": {
@@ -33,12 +58,27 @@
     "mobile": ["Телефон", "Phone number"],
     "nextButton": ["Далее", "Next"],
     "previousButton": ["Назад", "Previous"],
-    "note": ["Уже есть аккаунт?", "Already have an account?"]
+    "note": ["Уже есть аккаунт?", "Already have an account?"],
+    "userExists": ["Такой пользователь уже зарегистрирован", "User already registred"]
+  },
+
+  "reset": {
+    "email": ["Эл. почта", "E-mail"],
+    "password": ["Пароль", "Password"],
+    "passwordConfirm": ["Подтвердите пароль", "Confirm password"],
+    "resetMessage": [
+      "Мы отправили на указанный вами адрес электронной почты письмо со ссылкой для восстановления пароля.",
+      "We've sent you an email with the restoration link."
+    ],
+    "changeMessage": [
+      "Ваш пароль был успешно изменён.",
+      "You've changed your password successfully."
+    ]
   },
 
   "nav": {
     "home": ["Главная", "Home"],
-    "applications": ["Заявки", "Applications"],
+    "applications": ["Заявка", "Entry Form"],
     "players": ["Участники", "Players"],
     "results": ["Результаты", "Results"],
     "regulations": ["Регламент", "Regulations"],
@@ -47,12 +87,12 @@
   },
 
   "applications": {
-    "header": ["Заявки", "Applications"],
+    "header": ["Заявка", "Entry Form"],
     "note":[
       "Выберите не более трёх основных групп (<i class=\"material-icons\">people_outline</i>). Количество записей в листы ожидания (<i class=\"material-icons\">hourglass_empty</i>) не ограничено.",
-      "Choose no more than three main groups (<i class=\"material-icons\">people_outline</i>). Waiting list applications (<i class=\"material-icons\">hourglass_empty</i>) are unlimited."
+      "Choose no more than three main squads (<i class=\"material-icons\">people_outline</i>). Waiting list applications (<i class=\"material-icons\">hourglass_empty</i>) are unlimited."
     ],
-    "applyButton": ["Отправить заявку", "Apply"],
+    "applyButton": ["Отправить заявку", "Submit"],
     "applicationSuccess": ["Заявка успешно подана", "Successfully applied"],
     "applicationFailure": ["Ошибка подачи заявки", "Application wasn't send"],
     "applicationUnsaved": [
@@ -62,9 +102,10 @@
   },
 
   "squad": {
-    "group": ["группа", "group"],
+    "squad": ["Группа", "Squad"],
     "full": ["(заполнен)", "(full)"],
     "spots": ["Мест:", "Spots:"],
+    "fee": ["Взнос:", "Fee:"],
     "freeSpots": ["Свободных мест:", "Free spots:"],
     "entryFee": ["Вступительный взнос:", "Entry fee:"],
     "players": ["Участники:", "Players:"],
@@ -73,16 +114,18 @@
 
   "players": {
     "header": ["Участники", "Players"],
-    "playerHeader": ["Игрок", "Player"],
-    "squadsHeader": ["Потоки", "Squads"],
-    "groups": ["Основные группы:", "Squads:"],
+    "total": ["Всего участников: ${number}", "Total number of participants: ${number}"],
+    "squads": ["Основные группы:", "Squads:"],
     "waiting": ["Листы ожидания:", "Waiting lists:"],
-    "groupNumber": ["№", "#"]
+    "squadNumber": ["Группа ${number}", "Squad ${number}"],
+    "noBooking": ["Нет регистрации", "No booking"]
   },
 
   "contacts": {
     "header": ["Контакты", "Contacts"],
     "person": ["Контактное лицо", "Contact person"],
+    "name1": ["Лазута Елена", "Elena Lazuta"],
+    "name2": ["Синица Оксана", "Oksana Sinitsa"],
     "bowling": ["Боулинг-центр", "Bowling club"],
     "bowlingName": ["Боулинг «KINZA»", "\"KINZA\" bowling club"],
     "bowlingAddress": [
@@ -96,7 +139,7 @@
     "welcomeHeader": ["Добро пожаловать на «Сябры 2018»!", "Welcome to \"Siabry 2018\"!"],
     "welcomeSubheader": ["Добро пожаловать в Беларусь!", "Welcome to Belarus!"],
     "welcomeText": [
-      "Дамы и господа! Белорусская федерация боугинга рада пригласить вас на санкционированный ETBF турнир «Сябры 2018». Турнир будет проходить с 13 по 17 июня 2018 г.",
+      "Дамы и господа! Белорусская федерация боулинга рада пригласить вас на санкционированный ETBF турнир «Сябры 2018». Турнир будет проходить с 13 по 17 июня 2018 г.",
       "Ladies and gentlemen! Belarusian Bowling Federation welcomes you at the sanctioned by ETFB \"Siabry 2018\" tournament. The tournament will take place from 13 till 17 of June, 2018."
     ],
     "regulationsLink": ["Регламент турнира", "Tournament regulations"]
@@ -104,8 +147,8 @@
 
   "footer": {
     "copyright": [
-      "&copy; Международный турнир по боулингу \"Сябры-2018\"",
-      "&copy; International bowling tournament \"Siabry-2018\""
+      "&copy; 2018 Международный турнир по боулингу «Сябры»",
+      "&copy; 2018 International bowling tournament Siabry"
     ]
   }
 }

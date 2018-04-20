@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Translate, getActiveLanguage } from 'react-localize-redux';
 import { connect } from 'react-redux';
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import '../../sass/Home.scss';
 
@@ -23,17 +23,18 @@ function Home(props) {
     <div className="container">
       <Header active="home"/>
       <section className="home content">
-        {/* <header className="home__header">
-          <h1><Translate id="home.header" /></h1>
-        </header> */}
         <article className="home__welcome">
-          <a className="home__logo" href="http://vodka-syabry.by/"></a>
           <h1><Translate id="home.welcomeHeader"/></h1>
           <h3><Translate id="home.welcomeSubheader"/></h3>
           <p><Translate id="home.welcomeText"/></p>
-          <a href={regulationsLink} target="_blank">
+          <a href={regulationsLink} target="_blank" className="link">
             <Translate id="home.regulationsLink"/>
           </a>
+          <div className="home__partners">
+            <a className="home__logo vodka" href="http://vodka-syabry.by/"></a>
+            <a className="home__logo world-bowling" href="http://www.worldbowling.org/"></a>
+            <a className="home__logo etbf" href="http://etbf.eu/"></a>
+          </div>
         </article>
       </section>
       <Footer/>

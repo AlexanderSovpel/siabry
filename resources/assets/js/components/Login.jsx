@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Translate } from 'react-localize-redux';
 
-import Preloader from './elements/Preloader';
-import { Input } from './elements/Input';
+import Preloader from '../elements/Preloader';
+import { Input } from '../elements/Input';
 import Alert from './Alert';
 
 import AuthService from '../services/AuthService';
@@ -66,27 +66,33 @@ class Login extends Component {
         <Input
             type="text"
             name="username"
-            label={<Translate id="login.username"></Translate>}
+            label={<Translate id="login.username"/>}
             onChange={this.handleInputChange}
             required
           />
           <Input
             type="password"
             name="password"
-            label={<Translate id="login.password"></Translate>}
+            label={<Translate id="login.password"/>}
             onChange={this.handleInputChange}
             required
           />
         </fieldset>
           <button type="submit" className="button primary">
-            {this.state.loading ? <Preloader /> : <Translate id="loginButton"></Translate>}
+            {this.state.loading ? <Preloader /> : <Translate id="loginButton"/>}
           </button>
         </form>
 
         <p className="text center">
-          <Translate id="login.note"></Translate>&nbsp;
+          <Translate id="login.note"/>&nbsp;
           <Link to="/registration" className="link light">
-            <Translate id="registrationButton"></Translate>
+            <Translate id="registrationButton"/>
+          </Link>
+        </p>
+
+        <p className="text center">
+          <Link to="/passwordReset" className="link light">
+            <Translate id="login.passwordReset"/>
           </Link>
         </p>
 

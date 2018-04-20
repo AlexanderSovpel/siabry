@@ -14,6 +14,8 @@ export function Input (props) {
         required={props.required}
         onClick={props.onClick}
         onChange={props.onChange}
+        onFocus={props.onFocus}
+        onBlur={props.onBlur}
       />
     </div>
   );

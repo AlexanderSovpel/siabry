@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { Translate } from 'react-localize-redux';
 
-import { Input } from './elements/Input';
-import { RadioButton, RadioButtonGroup } from './elements/RadioButton';
-import Dropdown from './elements/Dropdown';
-import { Select } from './elements/Select';
+import { Input } from '../elements/Input';
+import { RadioButton, RadioButtonGroup } from '../elements/RadioButton';
+import Select from '../elements/Select';
+import Alert from '../components/Alert';
 
 import AuthService from '../services/AuthService';
 import HelperService from '../services/HelperService';
@@ -17,6 +17,7 @@ class Registration extends Component {
     this.state = {
       currentStep: 0,
       countries: [],
+      userExists: false,
     };
 
     HelperService.getCountries()
@@ -33,6 +34,7 @@ class Registration extends Component {
 
     this.nextStep = this.nextStep.bind(this);
     this.previousStep = this.previousStep.bind(this);
+    this.onCredentialChange = this.onCredentialChange.bind(this);
   }
 
   toggleFormButton(button, groupNumber) {
@@ -105,7 +107,7 @@ class Registration extends Component {
       handUsed: document.querySelector('input[name=handUsed]:checked').value,
       email: document.querySelector('input[name=email]').value,
       mobile: document.querySelector('input[name=mobile]').value,
-      country: document.querySelector('input[name=country]').value,
+      country: document.querySelector('[name=country]').value,
       city: document.querySelector('input[name=city]').value,
     };
 
@@ -121,13 +123,49 @@ class Registration extends Component {
       );
   }
 
+  onCredentialChange(event) {
+    if (event.target.validity.valid) {
+      this.checkCredential(event.target.value, AuthService[`${event.target.name}Exists`])
+    }
+  }
+
+  checkCredential(data, serviceValidator) {
+    serviceValidator(data).then(response => {
+      if (response) {
+        this.setState({ userExists: true });
+      } else {
+        this.setState({ userExists: false });
+      }
+    });
+  }
+
+  renderAlert() {
+    if (this.state.userExists) {
+      return <Alert message={<Translate id="registration.userExists"/>}/>
+    }
+  }
+
   render() {
     return (
       <div className="index-page__content">
         <form className="form form-registration" name="registrationForm" onSubmit={this.submitHandler}>
           <fieldset className="form__group form__group-current">
-            <Input type="email" name="email" label={<Translate id="registration.email"></Translate>} placeholder="example@bowling.by" required />
-            <Input type="text" name="username" label={<Translate id="registration.username"></Translate>} placeholder="super-bowler-2018" required />
+            <Input
+              type="email"
+              name="email"
+              label={<Translate id="registration.email"/>}
+              placeholder="example@bowling.by"
+              onBlur={this.onCredentialChange}
+              required
+            />
+            <Input
+              type="text"
+              name="username"
+              label={<Translate id="registration.username"/>}
+              placeholder="super-bowler-2018"
+              onBlur={this.onCredentialChange}
+              required
+            />
             <Input type="password" name="password" label={<Translate id="registration.password"></Translate>} placeholder="******" required />
           </fieldset>
 
@@ -150,10 +188,9 @@ class Registration extends Component {
           </fieldset>
 
           <fieldset className="form__group">
-            {/* <Select name="country" label={<Translate id="registration.country"></Translate>} placeholder="Выберите страну" data={this.countries} /> */}
-            <Dropdown
+            <Select
               name="country"
-              label={<Translate id="registration.country" />}
+              label={<Translate id="registration.country"/>}
               placeholder="Выберите страну"
               data={this.state.countries}
               required
@@ -161,11 +198,13 @@ class Registration extends Component {
             <Input type="text" name="city" label={<Translate id="registration.city"></Translate>} />
             <Input type="tel" name="mobile" label={<Translate id="registration.mobile"></Translate>} />
           </fieldset>
-  
+
+          {this.renderAlert()}
+
           <button className="button button-hidden primary submit">
             <Translate id="registrationButton"></Translate>
           </button>
-          <button className="button next primary" onClick={this.nextStep}>
+          <button className="button next primary" onClick={this.nextStep} disabled={this.state.userExists}>
             <Translate id="registration.nextButton"></Translate>
           </button>
           <button className="button button-hidden previous" onClick={this.previousStep}>

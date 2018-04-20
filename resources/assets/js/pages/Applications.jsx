@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Translate } from 'react-localize-redux';
 
-import Preloader from './elements/Preloader';
-import Alert from './Alert';
-import Header from './Header';
-import Navigation from './Navigation';
-import Day from './Day';
-import Footer from './Footer';
+import Preloader from '../elements/Preloader';
+import Alert from '../components/Alert';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import Day from '../components/Day';
+import Footer from '../components/Footer';
 
 import SquadService from '../services/SquadService';
 import ApplicationService from '../services/ApplicationService';
@@ -20,6 +20,10 @@ class Applications extends Component {
     this.MAX_APPLICATIONS = 3;
 
     this.player = JSON.parse(localStorage.getItem('player'));
+    console.log(this.player);
+    if (this.player.applications === undefined) {
+      this.player.applications = [];
+    }
 
     this.state = {
       days: [],
@@ -127,7 +131,7 @@ class Applications extends Component {
     for (let application of this.state.currentAppications) {
       applicationsData.push({
         tournament_id: 1,
-        player_id: this.player.id, 
+        player_id: this.player.id,
         squad_id: application.squad_id,
         waiting_list: application.waiting_list
       });

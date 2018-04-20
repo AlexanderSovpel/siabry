@@ -3,12 +3,29 @@
     text-align: center;
   }
 
+  &__partners {
+    margin-top: 40px;
+  }
+
   &__logo {
     display: inline-block;
-    background: url('../img/logo.png') no-repeat;
-    width: 259px;
-    height: 168px;
-    margin-top: 40px;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    width: 240px;
+    height: 160px;
+    margin: 24px 16px 8px 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.vodka {
+      background-image: url('../img/vodka.png');
+    }
+
+    &.world-bowling {
+      background-image: url('../img/world-bowling.png');
+    }
+
+    &.etbf {
+      background-image: url('../img/etbf.png');
+    }
   }
 }

@@ -24,7 +24,10 @@ Route::delete('applications/{application}', 'ApplicationsController@delete');
 
 Route::post('login', 'AuthController@login');
 Route::post('registration', 'AuthController@register');
-Route::post('checkEmail', 'AuthController@checkEmail');
+Route::get('emailExists/{email}', 'AuthController@emailExists');
+Route::get('usernameExists/{username}', 'AuthController@usernameExists');
+Route::post('resetPassword', 'AuthController@resetPasswordRequest');
+Route::post('changePassword', 'AuthController@changePassword');
 
 Route::get('countries', 'CoreController@countries');
 Route::get('currencies', 'CoreController@currencies');

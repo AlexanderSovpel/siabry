@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { Translate, setActiveLanguage, getActiveLanguage } from 'react-localize-redux';
 import { connect } from 'react-redux';
 
-import AuthService from '../services/AuthService';
-
+import Dropdown from '../elements/Dropdown';
+import Select from '../elements/Select';
 import Navigation from './Navigation';
 import SideMenu from './SideMenu';
 
+import AuthService from '../services/AuthService';
+
 import '../../sass/Header.scss';
-import Dropdown from './elements/Dropdown';
 
 class Header extends Component {
   constructor(props) {
@@ -46,14 +47,14 @@ class Header extends Component {
   }
 
   onLanguageChange(event) {
-    const lang = event.target.dataset.value;
+    const lang = event.target.dataset.value || event.target.value;
     this.setActiveLanguage(lang);
+    this.setState({ currentLanguage: lang });
   }
 
   setActiveLanguage(lang) {
     this.props.dispatch(setActiveLanguage(lang));
     localStorage.setItem('language', lang);
-    this.setState({ currentLanguage: lang });
   }
 
   render() {
@@ -66,13 +67,12 @@ class Header extends Component {
 
         <Navigation active={this.props.active}/>
 
-        <Dropdown
+        <Select
           className="header__languages"
           name="language"
           data={this.languages}
           default={this.languages.find(lang => lang.value === this.state.currentLanguage)}
           onChange={this.onLanguageChange}
-          disabled
         />
 
         {AuthService.isLoggedIn() ? this.logoutButton : this.loginButton}

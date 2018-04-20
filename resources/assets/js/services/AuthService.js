@@ -30,18 +30,35 @@ class AuthService {
       });
   }
 
-  static checkEmail(email) {
-    return axios.post('http://siabry.test/api/checkEmail', {
+  static emailExists(email) {
+    return axios.get(`http://siabry.test/api/emailExists/${email}`)
+      .then(response => {
+        return response.data;
+      }).catch(error => console.error(error));
+  }
+
+  static usernameExists(username) {
+    return axios.get(`http://siabry.test/api/usernameExists/${username}`)
+      .then(response => {
+        return response.data;
+      }).catch(error => console.error(error));
+  }
+
+  static resetPassword(email) {
+    return axios.post('http://siabry.test/api/resetPassword', {
       email: email,
-    }).then(response => {
-      console.log(response);
-      return response.data
-    });
+    }).then(response => response.data);
+  }
+
+  static changePassword(emailEncr, password) {
+    return axios.post('http://siabry.test/api/changePassword', {
+      emailEncr: emailEncr,
+      password: password
+    }).then(response => response.data);
   }
 
   static isLoggedIn() {
     const player = JSON.parse(localStorage.getItem('player'));
-    // console.log(player);
     return player || false;
   }
 }

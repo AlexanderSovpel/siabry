@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
@@ -10,13 +8,15 @@ import history from '../helpers/history';
 
 import AuthService from '../services/AuthService';
 
-import Index from '../components/Index';
+import Index from '../pages/Index';
 import Login from '../components/Login';
 import Registration from '../components/Registration';
-import Applications from '../components/Applications';
-import Players from '../components/Players';
-import Contacts from '../components/Contacts';
-import Home from '../components/Home';
+import PasswordReset from '../components/PasswordReset';
+import PasswordChange from '../components/PasswordChange';
+import Applications from '../pages/Applications';
+import Players from '../pages/Players';
+import Contacts from '../pages/Contacts';
+import Home from '../pages/Home';
 
 import '../../sass/App.scss';
 
@@ -30,17 +30,16 @@ store.dispatch(initialize(languages));
 const translation = require('../helpers/translation.json');
 store.dispatch(addTranslation(translation));
 
-// store.dispatch(setActiveLanguage('en'));
-
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            {/* <Route exact path="/" component={Index} /> */}
             <Route path="/login" render={(props) => <Index><Login /></Index>} />
             <Route path="/registration" render={(props) => <Index><Registration /></Index>} />
+            <Route path="/passwordReset" render={(props) => <Index><PasswordReset /></Index>} />
+            <Route path="/passwordChange" render={(props) => <Index><PasswordChange /></Index>}/>
             <Route path="/apply" render={(props) => (
               AuthService.isLoggedIn() ? <Applications {...props}/> : <Redirect to="/login" />
             )}/>

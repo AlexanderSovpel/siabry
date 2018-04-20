@@ -1,11 +1,26 @@
 import React from 'react';
 import { Translate } from 'react-localize-redux';
 
-import Checkbox from './elements/Checkbox';
-import { RadioButton } from './elements/RadioButton';
-import Tristate from './elements/Tristate';
+import Checkbox from '../elements/Checkbox';
+import { RadioButton } from '../elements/RadioButton';
+import Tristate from '../elements/Tristate';
 
 import '../../sass/Squad.scss';
+
+function renderList(players, waiting) {
+  const playersList = players.filter(player => player.pivot.waiting_list === waiting);
+  return playersList.length ? (
+    <ol className="squad__players">
+      {
+        players.map((player, index) => (
+          <li className="squad__player" key={index}>
+            {player.last_name} {player.first_name}
+          </li>
+        ))
+      }
+    </ol>
+  ) : <p className="text"><Translate id="players.noBooking" /></p>;
+}
 
 const Squad = function(props) {
   const selected = props.players.find(player => player.id === props.playerId);
@@ -45,41 +60,23 @@ const Squad = function(props) {
           }}
         />
         <label htmlFor={`squad__details_${props.id}`} className="squad__label">
-          <p className="text">{props.time.slice(0, 5)} — <Translate id="squad.group" /> {props.id} {(freeSlots > 0) || <Translate id="squad.full" />}</p>
-          <p className="text"><Translate id="squad.spots" /> {freeSlots}</p>
-          <p className="text">{props.fee}$</p>
+          <p className="text">{props.time.slice(0, 5)} — <Translate id="squad.squad" /> {props.id} {(freeSlots > 0) || <Translate id="squad.full" />}</p>
+          <p className="text">
+            <span className="fee"> {props.fee}$</span>
+            <span className="slots"><Translate id="squad.spots" /> {freeSlots}</span>
+          </p>
         </label>
       </header>
 
         <div className="squad__details">
-          <p className="text"><Translate id="squad.freeSpots" /> <span className="slots">{freeSlots}</span>/{props.spots}
+          <p className="text">
+            <span className="fee"><Translate id="squad.entryFee" /> {props.fee}$</span>
+            <span className="slots"><Translate id="squad.freeSpots" /> {freeSlots}/{props.spots}</span>
           </p>
-          <p className="text"><Translate id="squad.entryFee" /> <span className="fee">{props.fee} $</span>
-          </p>
-          <p className="text"><Translate id="squad.players" /></p>
-          <ol className="squad__players">
-            {
-              props.players.filter(player => player.pivot.waiting_list === 0)
-                .map((player, index) => (
-                  <li className="squad__player" key={index}>
-                    {player.last_name} {player.first_name}
-                  </li>
-                )
-              )
-            }
-          </ol>
-          <p className="text"><Translate id="squad.waiting" /></p>
-          <ol className="squad__players">
-            {
-              props.players.filter(player => player.pivot.waiting_list === 1)
-                .map((player, index) => (
-                  <li className="squad__player" key={index}>
-                    {player.last_name} {player.first_name}
-                  </li>
-                )
-              )
-            }
-          </ol>
+          <h5 className="text"><Translate id="squad.players" /></h5>
+          {renderList(props.players, 0)}
+          <h5 className="text"><Translate id="squad.waiting" /></h5>
+          {renderList(props.players, 1)}
         </div>
     </article>
   );

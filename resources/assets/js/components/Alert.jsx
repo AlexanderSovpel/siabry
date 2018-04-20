@@ -13,11 +13,17 @@ class Alert extends Component {
     this.props.close();
   }
 
+  renderClose() {
+    if (this.props.close) {
+      return <button className="alert__close button-flat" onClick={this.handleClose}></button>;
+    }
+  }
+
   render() {
     return (
       <div className={`alert ${this.props.type || ''}`}>
         <span>{this.props.message}</span>
-        <button className="alert__close button-flat" onClick={this.handleClose}></button>
+        {this.renderClose()}
       </div>
     );
   }

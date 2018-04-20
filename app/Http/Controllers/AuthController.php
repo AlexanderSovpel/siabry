@@ -7,7 +7,6 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 
@@ -77,7 +76,33 @@ class AuthController extends Controller {
 
     return $newPlayer;
   }
-}
 
+  public function resetPasswordRequest(Request $request) {
+    if ($this->emailExists($request['email'])) {
+      $email = encrypt($request['email']);
+      mail(
+        $request['email'],
+        'Восстановление пароля',
+        'http://siabry.test/passwordChange/'.$email
+      );
+      return 'check your email for reset link';
+    } else {
+      return 'email is not registred';
+    }
+  }
+
+  public function changePassword(Request $request) {
+    $email = decrypt($request['emailEncr']);
+    $player = Player::where('email', $email)->first();
+    if ($player) {
+      $user = User::where('player_id', $player->id)->first();
+      $user->password_hash = Hash::make($request['password']);
+      $user->save();
+      return 'password was changed';
+    }
+    return 'invalid link';
+
+  }
+}
 
 ?>

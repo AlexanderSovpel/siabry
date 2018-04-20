@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../sass/Preloader.scss';
+import '../../sass/Preloader.scss';
 
 function Preloader(props) {
   return (
