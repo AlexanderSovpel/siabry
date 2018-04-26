@@ -20,18 +20,35 @@ class ApplicationsController extends Controller {
     return $application;
   }
 
-  public function create(Request $request) {
-    $player = Player::find($request->input('player_id'));
-    Application::where('player_id', $player->id)->delete();
+  public function compareApplications($applicationA, $applicationB) {
+    return $applicationA['squad_id'] - $applicationB['squad_id'];
+  }
 
-    $applications = $request->input('applications');
-    foreach ($applications as $application) {
-        Application::create($application);
+  public function create(Request $request) {
+    $oldApplications = Application::where('player_id', $request->input('player_id'))->get();
+    $newApplications = $request->input('applications');
+
+    $bookingsToDelete = array_udiff($oldApplications->toArray(), $newApplications, [$this, 'compareApplications']);
+    foreach ($bookingsToDelete as $key => $value) {
+      $oldApplications[$key]->delete();
     }
 
-    // mail($player->email, 'Siabry 2018 Registration', 'You applied!');
-    // Mail::to($player->email)->send(new ApplicationSent($player));
+    $bookingsToCreate = array_udiff($newApplications, $oldApplications->toArray(), [$this, 'compareApplications']);
+    foreach ($bookingsToCreate as $key => $value) {
+      Application::create($value);
+    }
 
+    $bookingsToUpdate = array_uintersect($newApplications, $oldApplications->toArray(), [$this, 'compareApplications']);
+    foreach ($bookingsToUpdate as $key => $value) {
+      $existingApplication = $oldApplications->where('squad_id', $value['squad_id'])->first();
+      if ($value['waiting_list'] != $existingApplication->waiting_list) {
+        $existingApplication->update([
+          'waiting_list' => $value['waiting_list']
+        ]);
+      }
+    }
+
+    $player = Player::find($request->input('player_id'));
     return $player->applications;
   }
 
