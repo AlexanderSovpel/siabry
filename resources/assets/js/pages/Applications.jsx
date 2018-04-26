@@ -20,7 +20,6 @@ class Applications extends Component {
     this.MAX_APPLICATIONS = 3;
 
     this.player = JSON.parse(localStorage.getItem('player'));
-    console.log(this.player);
     if (this.player.applications === undefined) {
       this.player.applications = [];
     }
@@ -136,6 +135,7 @@ class Applications extends Component {
         waiting_list: application.waiting_list
       });
     }
+    // console.log(applicationsData);
 
     ApplicationService.apply(this.player.id, applicationsData).then(
       response => {
@@ -149,7 +149,7 @@ class Applications extends Component {
         this.getDays();
       },
       error => {
-        console.error(error);
+        console.error(error.response.data);
         this.setState({
           loading: false,
           status: { type: 'failure', message: <Translate id="applicationFailure"></Translate>}

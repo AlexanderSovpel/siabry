@@ -1,14 +1,22 @@
 import React from 'react';
+import { getActiveLanguage } from 'react-localize-redux';
+import { connect } from 'react-redux';
 
 import Squad from './Squad';
 
 import '../../sass/Day.scss';
 
 const Day = function(props) {
+  const formatter = new Intl.DateTimeFormat(props.currentLanguage.code, {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  });
+
   return (
     <section className="day">
       <header className="day__header">
-        {props.date.toLocaleDateString()}
+        {formatter.format(props.date)}
       </header>
 
       {
@@ -31,4 +39,6 @@ const Day = function(props) {
   );
 }
 
-export default Day;
+const mapStateToProps = state => ({ currentLanguage: getActiveLanguage(state.locale) });
+
+export default connect(mapStateToProps)(Day);
