@@ -10,7 +10,10 @@ class ApplacationService {
     return axios.post('http://siabry.test/api/applications', {
       player_id: playerId,
       applications: applications
-    }).then(response => response.data);
+    }).then(response => {
+      console.log(response.data);
+      return response.data;
+    });
   }
 
   static notify(email, applications) {
